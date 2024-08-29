@@ -1,0 +1,31 @@
+$input-border-color: #EBEBEB;
+$input-padding: 16px 24px;
+$textarea-padding: 8px 8px;
+$textarea-min-height: 440px;
+$textarea-sm-min-height: 160px;
+
+input, select {
+  &.text {
+    width: 100%;
+    margin: 8px 0;
+    padding: $input-padding;
+    border: 1px solid $input-border-color;
+  }
+}
+
+label {
+  font-size: 12px;
+}
+
+textarea, trix-editor {
+  width: 100%;
+  margin: 8px 0;
+  padding: $textarea-padding;
+  min-height: $textarea-min-height;
+  resize: vertical;
+  border: 1px solid $input-border-color;
+
+  &.sm {
+    min-height: $textarea-sm-min-height;
+  }
+}
