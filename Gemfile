@@ -37,8 +37,12 @@ gem "bootsnap", require: false
 gem 'devise'
 # コマンドrails haml:erb2haml
 gem 'haml-rails'
-
+#scssを使えるようにする
 gem 'sassc-rails'
+gem "importmap-rails" 
+gem "turbo-rails"
+gem "stimulus-rails"
+gem 'bootstrap', '~> 5.0'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
