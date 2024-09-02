@@ -1,7 +1,32 @@
 .container
-    %h1 投稿詳細ページ
-    %h3= @post.user.email
-    %h3= @post.content
-    = link_to "ホームへ戻る", posts_path
-    = link_to "編集", edit_post_path(@post), class: "btn btn-sm btn-outline-primary me-2"
-    = link_to "delete",@post, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}
+  %h1 投稿詳細ページ
+  %h3= @post.user.email
+  %h3= @post.content
+
+  %div.dropdown
+    %button.btn.btn-primary.dropdown-toggle{ type: 'button', id: 'dropdownMenuButton', 'data-bs-toggle': 'dropdown', 'aria-expanded': 'false' }
+      メニュー
+    %ul.dropdown-menu{ 'aria-labelledby': 'dropdownMenuButton' }
+      %li
+        = link_to "ホームへ戻る", posts_path, class: "dropdown-item"
+      %li
+        = link_to "編集", edit_post_path(@post), class: "dropdown-item"
+      %li
+        = link_to "削除", @post, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "dropdown-item"
+      %li
+        = link_to "タスクを追加", new_post_task_path(@post), class: "dropdown-item"
+
+  %h2 Tasks
+  - if @post.tasks.any?
+    %ul
+      - @post.tasks.each do |task|
+        %li
+          %strong
+            = link_to task.name, post_task_path(@post, task)
+          %p
+            = task.content
+          - if task.image.present?
+            %p
+              = image_tag task.image.url
+  - else
+    %p No tasks available
