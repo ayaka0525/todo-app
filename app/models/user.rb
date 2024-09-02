@@ -6,4 +6,5 @@ class User < ApplicationRecord
          :trackable
  has_many :posts, dependent: :destroy
  has_many :tasks, dependent: :destroy
+ 
 end

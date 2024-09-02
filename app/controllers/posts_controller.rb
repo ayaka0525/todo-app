@@ -1,55 +1,64 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, only: [:show, :create, :edit, :destroy]
-
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy ]
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
   def index
     @posts = Post.all
-    @post = Post.new
+    @user_email_parts = @posts.map do |post|
+      if post.user.present?
+        post.user.email.split('@').first  # @ 以前の部分を取得
+      else
+        'ユーザー情報がありません'
+      end
+    end
   end
 
   def show
-    @post = Post.find_by(id: params[:id])
     if @post.nil?
       flash[:alert] = "投稿が見つかりません"
       redirect_to posts_path
     end
   end
 
-  def edit
-    @post = Post.find(params[:id])
+  def new
+    @post = Post.new
   end
 
   def create
     @post = Post.new(post_params)
-    @post.user_id = current_user.id
+    @post.user = current_user # 投稿者を現在のユーザーに設定
+
     if @post.save
-      redirect_back(fallback_location: root_path)
+      redirect_to @post, notice: '投稿が成功しました。'
     else
-      redirect_back(fallback_location: root_path)
+      render :new
     end
   end
 
-
+  def edit
+    # @postはbefore_actionで設定済み
+  end
 
   def update
-    @post = Post.find(params[:id])
     if @post.update(post_params)
-      redirect_to @post, notice: "Post updated"
+      redirect_to @post, notice: '投稿が更新されました。'
     else
-      render 'edit', status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    Post.find(params[:id]).destroy
-  # 削除リンクから飛んできたときのparamsに格納されたidを元に、該当する投稿データを探して、変数に代入する
-  flash[:success] = "User deleted"
-  redirect_to posts_url, status: :see_other
-
+    @post.destroy
+    flash[:success] = '投稿が削除されました。'
+    redirect_to posts_path, status: :see_other
   end
 
   private
 
+  def set_post
+    @post = Post.find(params[:id])
+  end
+
   def post_params
-    params.require(:post).permit(:content)
+    params.require(:post).permit(:title, :content, :deadline)
   end
 end

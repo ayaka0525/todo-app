@@ -1,16 +1,16 @@
 .container
-    %h1= @post.title
-    %p= @post.body
+  %h1= @post.title
+  %p= @post.body
 
-    %h2 Tasks
+  %h2 Tasks
 
-    - @tasks.each do |task|
+  - @tasks.each do |task|
     .task
-        %strong= task.name
-        %br/
-        = task.content
-        - if task.image.present?
+      %strong= task.name
+      %br/
+      = task.content
+      - if task.image.present?
         %br/
         = image_tag task.image.url
 
-    = link_to 'Add Task', new_post_task_path(@post)
+  = link_to 'Add Task', new_post_task_path(@post)
