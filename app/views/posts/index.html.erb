@@ -7,6 +7,17 @@
       <% @posts.each_with_index do |post, index| %>
         <div class="col-md-4 mb-4">
           <div class="card">
+            <div class="dropdown position-relative">
+              <button class="btn btn-secondary dropdown-toggle position-absolute top-0 end-0 m-2" type="button" id="dropdownMenuButton<%= post.id %>" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-ellipsis-v"></i>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton<%= post.id %>">
+                <li><%= link_to '編集', edit_post_path(post), class: 'dropdown-item' %></li>
+                <li>
+                  <%= button_to '削除', post_path(post), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'dropdown-item text-danger' %>
+                </li>
+              </ul>
+            </div>
             <a href="<%= post_path(post) %>" class="text-decoration-none text-black">
               <div class="card-body">
                 <% if post.user.present? %>
@@ -46,7 +57,7 @@
     <div class="col-md-4 mb-4">
       <div class="card h-100">
         <div class="card-body text-center d-grid gap-2">
-        <i class="fa fa-plus fa-4x"></i>
+          <i class="fa fa-plus fa-4x"></i>
           <%= link_to '投稿する', new_post_path, class: 'btn btn-primary w-100' %>
         </div>
       </div>

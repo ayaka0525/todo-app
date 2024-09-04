@@ -9,5 +9,7 @@ class UsersController < ApplicationController
     flash[:alert] = "ユーザーが見つかりません"
     redirect_to root_path
   end
+
+
 end
 
