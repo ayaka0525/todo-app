@@ -1,1 +1,26 @@
-%h1 show
+.container
+  %h1 Hello#index
+  %p Find me in app/views/hello/index.html.erb
+  
+  .btn-group
+    %button.btn.btn-danger.dropdown-toggle{ type: 'button', 'data-bs-toggle': 'dropdown', 'aria-expanded': 'false' }
+      Action
+    %ul.dropdown-menu
+      %li
+        %a.dropdown-item{ href: "#" } Action
+      %li
+        %a.dropdown-item{ href: "#" } Another action
+
+  %div
+    %h5 Fontawesome Icon
+    %div{ style: 'font-size: 5rem; color: cornflowerblue;' }
+      %i.fas.fa-space-shuttle
+      %i.fas.fa-snowman
+      %i.fas.fa-kiwi-bird
+
+  %div
+    %h5 Bootstrap Icons
+    %div{ style: 'font-size: 5rem; color: orange;' }
+      %i.bi.bi-boxes
+      %i.bi.bi-radioactive
+      %i.bi.bi-alarm

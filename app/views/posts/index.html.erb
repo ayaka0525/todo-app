@@ -1,0 +1,55 @@
+<div class="container mt-4">
+  <hr>
+
+  <h2 class="text-center">投稿一覧</h2>
+  <div class="row">
+    <% if @posts.any? %>
+      <% @posts.each_with_index do |post, index| %>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <a href="<%= post_path(post) %>" class="text-decoration-none text-black">
+              <div class="card-body">
+                <% if post.user.present? %>
+                  <h5 class="card-title">
+                    <i class="fas fa-user me-2 fa-sm"></i>
+                    <%= @user_email_parts[index] %> <!-- メールの @ 前の部分を表示 -->
+                  </h5>
+                <% else %>
+                  <h5 class="card-title">
+                    <i class="fas fa-user-slash me-2 fa-sm"></i>
+                    ユーザー情報がありません
+                  </h5>
+                <% end %>
+                <p class="card-text">
+                  <i class="fas fa-edit me-2 fa-sm"></i>
+                  <%= post.title %>
+                </p>
+                <p class="card-text">
+                  <%= post.content %>
+                </p>
+                <% if post.deadline.present? %>
+                  <p class="card-text">
+                    <i class="fas fa-calendar-day me-2 fa-sm"></i>
+                    期限: <%= post.formatted_deadline %>
+                  </p>
+                <% end %>
+              </div>
+            </a>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p>投稿がありません</p>
+    <% end %>
+
+    <!-- 投稿するボタン -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-body text-center d-grid gap-2">
+        <i class="fa fa-plus fa-4x"></i>
+          <%= link_to '投稿する', new_post_path, class: 'btn btn-primary w-100' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="container">
+<div class="post-main mt-3 p-4 border rounded bg-light shadow-sm">
+  <h2 class="text-primary mb-3">
+    <i class="far fa-file-alt me-2"></i>新規作成
+  </h2>
+  <h5 class="text-info mb-0">
+    <strong>投稿タイトル：</strong> <%= @post.title %>
+  </h5>
+</div>
+
+<div class="form-task mt-3 p-4 border rounded bg-light shadow-sm>
+  <%= form_with(model: [@post, @task], local: true) do |form| %>
+    <div class="field mb-3">
+      <%= form.label :name, class: 'form-label' %>
+      <%= form.text_field :name, class: 'form-control', value: current_user.email, readonly: true %>
+    </div>
+
+    <div class="field mb-3">
+      <%= form.label :content, class: 'form-label' %>
+      <%= form.text_area :content, class: 'form-control' %>
+    </div>
+
+    <div class="field mb-3">
+      <%= form.label :image, class: 'form-label' %>
+      <%= form.file_field :image, class: 'form-control' %>
+    </div>
+
+    <div class="field mb-3">
+      <%= form.label :deadline, 'Deadline', class: 'form-label' %>
+      <%= form.date_field :deadline, class: 'form-control' %>
+    </div>
+
+    <div class="actions card-body text-center d-grid gap-2">
+      <%= form.submit 'Create Task', class: 'btn btn-primary rounded-5 shadow-sm' %>
+    </div>
+  <% end %>
+    <div class="card-body text-center d-grid gap-2">
+    <%= link_to 'Back', post_path(@post), class: 'btn btn-secondary rounded-5 shadow-sm mt-3' %>
+    </div>
+    </div>
+</div>
+

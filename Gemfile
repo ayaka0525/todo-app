@@ -38,10 +38,15 @@ gem "devise"
 # コマンドrails haml:erb2haml
 gem "haml-rails"
 # scssを使えるようにする
-gem "sassc-rails"
-gem "bootstrap", "~> 5.3.0"
+gem 'sassc-rails'
+# gem "bootstrap", "~> 5.3.0"
+gem "bootsnap", require: false
 gem 'jquery-rails'
+gem 'popper_js'
 gem "carrierwave"
+gem "cssbundling-rails", "~> 1.4"
+
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -63,3 +68,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+
