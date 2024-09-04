@@ -1,0 +1,36 @@
+<div class="container mt-4">
+  <!-- エラーメッセージ -->
+  <% if @post.errors.any? %>
+    <div class="alert alert-danger mb-4">
+      <ul class="mb-0">
+        <% @post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- フォーム -->
+  <%= form_with(model: @post, local: true) do |f| %>
+    <div class="mb-3">
+      <%= f.label :title, 'タイトル', class: 'form-label' %>
+      <%= f.text_field :title, class: 'form-control' %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :content, '内容', class: 'form-label' %>
+      <%= f.text_area :content, class: 'form-control' %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :deadline, '期限', class: 'form-label' %>
+      <%= f.date_field :deadline, class: 'form-control' %>
+    </div>
+
+    <div class="card-body text-center d-grid gap-2">
+      <%= f.submit '保存', class: 'btn btn-primary' %>
+    </div>
+
+
+  <% end %>
+</div>

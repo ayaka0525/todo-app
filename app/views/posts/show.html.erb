@@ -1,0 +1,49 @@
+<div class="container mt-4">
+  <div class="row justify-content-center ">
+    <div class="col-md-8">
+
+      <!-- ユーザー情報 -->
+      <div class="mb-4 text-center">
+        <i class="fas fa-user fa-2x mb-2 text-secondary"></i>
+        <h5 class="text-primary"><%= @post.user.email %></h5>
+        <h3 class="text-info"><i class="fas fa-edit me-2 fa-sm"></i><%= @post.title %></h3>
+        <h3 class="text-primary"><%= @post.content %></h3>
+      </div>
+
+      <!-- タスクセクション -->
+      <div class="container mt-4 p-4 border rounded bg-light shadow-sm">
+        <h2 class="mb-4 text-center">タスクリスト</h2>
+        <div class="row">
+          <% if @post.tasks.any? %>
+            <% @post.tasks.each do |task| %>
+              <div class="col-md-4 mb-3">
+                <%= link_to post_task_path(@post, task), class: 'text-decoration-none' do %>
+                  <div class="card card-custom-bg card-custom-border shadow-sm h-100 hover-opacity">
+                    <% if task.image.present? %>
+                      <%= image_tag task.image.url, class: 'card-img-top img-fluid', alt: 'Task Image' %>
+                    <% end %>
+                    <div class="card-body">
+                      <h5 class="card-title card-custom-title"><%= task.name %></h5>
+                      <p class="card-text"><%= task.content %></p>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+
+          <!-- タスク作成ボタン -->
+          <div class="col-md-4 mb-3">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <i class="fa fa-plus fa-4x"></i>
+                <%= link_to 'タスクを追加', new_post_task_path(@post), class: 'btn btn-primary w-100 mt-2' %>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
