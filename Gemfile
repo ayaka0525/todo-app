@@ -45,6 +45,7 @@ gem 'jquery-rails'
 gem 'popper_js'
 gem "carrierwave"
 gem "cssbundling-rails", "~> 1.4"
+gem 'hotwire-rails'
 
 
 group :development, :test do
