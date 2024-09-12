@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :posts do
-    resources :tasks
+    resources :tasks do
+      resources :comments, only: [:create]
   end
+end
   # devise_scope :user do
   #   get '/users/sign_out' => 'devise/sessions#destroy'
   # end

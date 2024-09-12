@@ -1,16 +1,19 @@
 class TasksController < ApplicationController
-    before_action :set_post
-    before_action :set_task, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_post
+  before_action :set_task, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @tasks = @post.tasks
   end
 
   def show
-    @post = Post.find(params[:id])
-    @tasks = @post.tasks
+    @task = Task.find(params[:id])
+    @post = @task.post
+    @comments = @task.comments # コメントをロード
+    @comment = @task.comments.new # 新しいコメント用
+  rescue ActiveRecord::RecordNotFound
+    redirect_to posts_path, alert: 'Task not found.'
   end
-
 
   def new
     @task = @post.tasks.new
@@ -26,8 +29,10 @@ class TasksController < ApplicationController
       render :new
     end
   end
+
   def edit
   end
+
   def update
     if @task.update(task_params)
       redirect_to post_task_path(@post, @task), notice: "Task was successfully updated."
@@ -41,7 +46,16 @@ class TasksController < ApplicationController
     redirect_to post_tasks_path(@post), notice: "Task was successfully destroyed."
   end
 
+  def create_comment
+    @comment = @task.comments.build(comment_params)
+    @comment.user = current_user
 
+    if @comment.save
+      redirect_to post_task_path(@post, @task), notice: 'Comment was successfully created.'
+    else
+      render :show
+    end
+  end
 
   private
 
@@ -55,5 +69,9 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :content, :image)
+  end
+
+  def comment_params
+    params.require(:comment).permit(:content)
   end
 end

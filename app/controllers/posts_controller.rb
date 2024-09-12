@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy ]
   before_action :set_post, only: %i[show edit update destroy]
+  before_action :set_task, only: [:show] # タスクの設定を追加
 
   def new
     @post = current_user.posts.build # current_userはログイン中のユーザーを返します
@@ -16,6 +17,7 @@ class PostsController < ApplicationController
       render :new
     end
   end
+
   def index
     @posts = Post.all
 
@@ -32,9 +34,12 @@ class PostsController < ApplicationController
     end
   end
 
-
-
-
+  def show
+    # @postはbefore_actionで設定済み
+    # @taskはbefore_actionで設定済み
+  rescue ActiveRecord::RecordNotFound
+    redirect_to posts_path, alert: 'Post not found.'
+  end
 
   def edit
     # @postはbefore_actionで設定済み
@@ -58,6 +63,12 @@ class PostsController < ApplicationController
 
   def set_post
     @post = Post.find(params[:id])
+  end
+
+  def set_task
+    if params[:task_id]
+      @task = @post.tasks.find_by(id: params[:task_id])
+    end
   end
 
   def post_params
