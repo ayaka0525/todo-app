@@ -9,7 +9,7 @@ class TasksController < ApplicationController
   def show
     @task = Task.find(params[:id])
     @post = @task.post
-    @comments = @task.comments # コメントをロード
+    @comments = @task.comments.includes(:user)  # ユーザー情報も一緒に取得
     @comment = @task.comments.new # 新しいコメント用
   rescue ActiveRecord::RecordNotFound
     redirect_to posts_path, alert: 'Task not found.'
