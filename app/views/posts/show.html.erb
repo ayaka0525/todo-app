@@ -1,13 +1,16 @@
 <div class="container mt-4">
-  <div class="row justify-content-center ">
+  <div class="row justify-content-center">
     <div class="col-md-8">
 
-      <!-- ユーザー情報 -->
+      <!-- ユーザー情報セクション -->
       <div class="mb-4 text-center">
         <i class="fas fa-user fa-2x mb-2 text-secondary"></i>
         <h5 class="text-primary"><%= @post.user.email %></h5>
-        <h3 class="text-info"><i class="fas fa-edit me-2 fa-sm"></i><%= @post.title %></h3>
-        <h3 class="text-primary"><%= @post.content %></h3>
+        <h3 class="text-info">
+          <i class="fas fa-edit me-2 fa-sm"></i>
+          <%= @post.title %>
+        </h3>
+        <h4 class="text-primary"><%= @post.content %></h4>
       </div>
 
       <!-- タスクセクション -->
@@ -16,34 +19,52 @@
         <div class="row">
           <% if @post.tasks.any? %>
             <% @post.tasks.each do |task| %>
-              <div class="col-md-4 mb-3">
-                <%= link_to post_task_path(@post, task), class: 'text-decoration-none' do %>
-                  <div class="card card-custom-bg card-custom-border shadow-sm h-100 hover-opacity">
-                    <% if task.image.present? %>
-                      <%= image_tag task.image.url, class: 'card-img-top img-fluid', alt: 'Task Image' %>
-                    <% end %>
-                    <div class="card-body">
-                      <h5 class="card-title card-custom-title"><%= task.name %></h5>
-                      <p class="card-text"><%= task.content %></p>
-                    </div>
+              <div class="col-md-6 mb-3">
+                <div class="card shadow-sm h-100 hover-opacity position-relative" style="min-width: 18rem;">
+                  <!-- ドロップダウンメニュー (右上) -->
+                  <div class="dropdown position-absolute top-0 end-0 m-2">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton<%= task.id %>" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton<%= task.id %>">
+                      <li><%= link_to '詳細', post_task_path(@post, task), class: 'dropdown-item' %></li>
+                      <li><%= link_to '編集', edit_post_task_path(@post, task), class: 'dropdown-item' %></li>
+                      <li>
+                        <%= button_to '削除', post_task_path(@post, task), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'dropdown-item text-danger' %>
+                      </li>
+                    </ul>
                   </div>
-                <% end %>
+                  <!-- タスクの内容 -->
+                  <% if task.image.present? %>
+                    <%= image_tag task.image.url, class: 'card-img-top img-fluid', alt: 'Task Image' %>
+                  <% end %>
+                  <div class="card-body">
+                    <h5 class="card-title text-dark"><%= task.name %></h5>
+                    <p class="card-text text-muted"><%= task.content %></p>
+                  </div>
+                </div>
               </div>
             <% end %>
+          <% else %>
+            <div class="col-12 text-center">
+              <p class="text-muted">まだタスクがありません。</p>
+            </div>
           <% end %>
 
-          <!-- タスク作成ボタン -->
-          <div class="col-md-4 mb-3">
-            <div class="card h-100">
-              <div class="card-body text-center">
-                <i class="fa fa-plus fa-4x"></i>
-                <%= link_to 'タスクを追加', new_post_task_path(@post), class: 'btn btn-primary w-100 mt-2' %>
-              </div>
-            </div>
+                <!-- タスク作成ボタン -->
+      <div class="col-md-6 mb-3">
+        <div class="card h-100">
+          <div class="card-body text-center">
+            <i class="fa fa-plus fa-4x text-primary"></i>
+            <%= link_to 'タスクを追加', new_post_task_path(@post), class: 'btn btn-primary w-100 mt-2' %>
           </div>
+        </div>
+      </div>
 
         </div>
       </div>
+
+
     </div>
   </div>
 </div>
