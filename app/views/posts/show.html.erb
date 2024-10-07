@@ -21,19 +21,15 @@
             <% @post.tasks.each do |task| %>
               <div class="col-md-6 mb-3">
                 <div class="card shadow-sm h-100 hover-opacity position-relative" style="min-width: 18rem;">
-                  <!-- ドロップダウンメニュー (右上) -->
+                  <!-- メニュー (右上) -->
                   <div class="dropdown position-absolute top-0 end-0 m-2">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton<%= task.id %>" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton<%= task.id %>">
-                      <li><%= link_to '詳細', post_task_path(@post, task), class: 'dropdown-item' %></li>
-                      <li><%= link_to '編集', edit_post_task_path(@post, task), class: 'dropdown-item' %></li>
-                      <li>
-                        <%= button_to '削除', post_task_path(@post, task), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'dropdown-item text-danger' %>
-                      </li>
-                    </ul>
+                    <div class="btn-group">
+                      <%= link_to '詳細', post_task_path(@post, task), class: 'btn btn-info me-1' %>
+                      <%= link_to '編集', edit_post_task_path(@post, task), class: 'btn btn-secondary me-1' %>
+                      <%= link_to '削除', post_task_path(@post, task), data: { turbo_method: :delete,  turbo_confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
+                    </div>
                   </div>
+
                   <!-- タスクの内容 -->
                   <% if task.image.present? %>
                     <%= image_tag task.image.url, class: 'card-img-top img-fluid', alt: 'Task Image' %>

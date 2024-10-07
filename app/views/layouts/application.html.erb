@@ -20,9 +20,6 @@
             <%= link_to 'ログアウト', destroy_user_session_path,class: 'nav-link rounded-5 btn btn-secondary', method: :delete, data: { turbo_method: :delete } %>
 
           </li>
-          <li class="nav-item" role="presentation">
-            <%= link_to 'マイページへ', user_path(current_user), class: 'nav-link rounded-5 btn btn-secondary', id: 'profile-tab2' %>
-          </li>
         <% else %>
           <li class="nav-item" role="presentation">
             <%= link_to 'ログイン', new_user_session_path, class: 'nav-link rounded-5 btn btn-primary' %>
